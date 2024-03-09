@@ -1,0 +1,33 @@
+.homeBanner {
+  width: 100%;
+  height: 150px;
+  background-color: black;
+  background-image: url("../../Images/banner.gif");
+  background-size: contain;
+  background-repeat: repeat;
+  background-position: center;
+}
+.productData {
+  display: flex;
+  margin-top: 28px;
+  padding-right: 6px;
+  justify-content: space-evenly;
+  gap: 10px;
+  font-size: 20px;
+}
+.populerProduct {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+}
+.latestProduct {
+  margin-left: 20px;
+}
+.imageContainer{
+  display: flex;
+  width: 100%;
+}
+.imageContainer img{
+  width: 100%;
+  margin-right: 30px;
+}
