@@ -9,6 +9,11 @@ import Product from "./pages/Product/Product";
 import Login from "./pages/Login/Login";
 import ProductCategory from "./pages/Product Category/ProductCategory.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
+import SearchProducts from "./pages/SearchProducts/SearchProducts.jsx";
+import { useContext, useEffect, useState } from "react";
+import { ProductContext } from "./context/ProductContext.jsx";
+import Item from "./components/Item/Item.jsx";
+import SearchResults from "./pages/SearchProducts/SearchProducts.jsx";
 
 const DefaultLayout = ({ children }) => (
   <>
@@ -18,6 +23,24 @@ const DefaultLayout = ({ children }) => (
 );
 
 function App() {
+  // const { allProducts } = useContext(ProductContext);
+  // const [query, setQuery] = useState("");
+  // const [results, setResults] = useState([]);
+
+  // const handleInputChange = (e) => {
+  //   setQuery(e.target.value);
+  // };
+
+  // useEffect(() => {
+  //   // Perform your search logic here
+  //   const searchResults = allProducts.filter((product) =>
+  //     product.brand.toLowerCase().includes(query.toLowerCase())
+  //   );
+
+  //   // Update the results state
+  //   setResults(searchResults);
+  // }, [query, allProducts]);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -30,6 +53,14 @@ function App() {
               </DefaultLayout>
             }
           />
+          {/* <Route
+            path="/search"
+            element={
+              <DefaultLayout>
+                <SearchResults />
+              </DefaultLayout>
+            }
+          /> */}
           <Route
             path="/profile"
             element={
