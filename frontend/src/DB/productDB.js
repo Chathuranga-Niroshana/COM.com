@@ -1,5 +1,5 @@
 // productDB.js
-const productDB = [
+const allProducts = [
   {
     id: 1,
     brand: "Dell",
@@ -343,4 +343,4 @@ const productDB = [
   },
 ];
 
-export default productDB;
+export default allProducts;

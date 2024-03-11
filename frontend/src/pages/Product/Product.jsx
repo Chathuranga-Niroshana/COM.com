@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Product.css";
-import productDB from "../../DB/productDB";
 import { Link, useParams } from "react-router-dom";
 import arrowImg from "../../Images/arrow1.png";
+import { ProductContext } from "../../context/ProductContext.jsx";
 
 const Product = () => {
   const { id } = useParams();
-  const product = productDB.find((e) => e.id === Number(id));
+  const { addToCart,allProducts } = useContext(ProductContext);
+  const product = allProducts.find((e) => e.id === Number(id));
+
+  const handleAddToCart = () => {
+    addToCart(product.id);
+  };
 
   return (
     <div className="product">
@@ -52,7 +57,7 @@ const Product = () => {
           <div className="counterOperation">-</div>
         </div> */}
         <div className="cartBtninProduct">
-          <button>Add to Cart</button>
+          <button onClick={handleAddToCart}>Add to Cart</button>
         </div>
       </div>
     </div>

@@ -1,40 +1,56 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import allProducts from "../DB/productDB.js";
 
-const CartContext = createContext();
+export const ProductContext = createContext();
 
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error(Error.message);
+const getDefaultCart = () => {
+  let cart = {};
+  for (let index = 0; index < 300 + 1; index++) {
+    cart[index] = 0;
   }
-  return context;
+  return cart;
 };
 
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+export const ProductContextProvider = (props) => {
+  useEffect(() => {
+    // Additional initialization or side effects can be placed here
+    // This effect runs only once, simulating componentDidMount
+  }, []);
 
-  const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+  const [cart, setCart] = useState(getDefaultCart());
+
+  const addToCart = (productId) => {
+    setCart((prevCart) => ({
+      ...prevCart,
+      [productId]: prevCart[productId] + 1,
+    }));
   };
 
   const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    setCart((prevCart) => ({
+      ...prevCart,
+      [productId]: prevCart[productId] - 1,
+    }));
   };
 
   const clearCart = () => {
-    setCart([]);
+    setCart(getDefaultCart());
+  };
+
+  const contextValue = {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    allProducts,
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        clearCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+    <ProductContext.Provider value={contextValue}>
+      {props.children}
+    </ProductContext.Provider>
   );
 };
+
+
+export default ProductContextProvider;

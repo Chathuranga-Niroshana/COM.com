@@ -1,10 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Cart.css";
-import { useCart } from "../../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext";
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, removeFromCart, clearCart, allProducts } =
+    useContext(ProductContext);
+
+  const clearAll = () => {
+    clearCart();
+  };
+
   return (
     <div className="cartContainer">
       <h1>CART</h1>
@@ -21,32 +27,55 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  <Link to={`/product/${item.id}`}>
-                    <img src={item.imgurl} alt={item.category} />
-                  </Link>
-                </td>
-                <td>
-                  {item.brand} {item.category}
-                </td>
-                <td>1</td>
-                <td>${item.price.toFixed(2)}</td>
-                <td>${item.price.toFixed(2)}</td>
-                <td>
-                  <button onClick={() => removeFromCart(item.id)}>❌</button>
-                </td>
-              </tr>
-            ))}
+            {Object.entries(cart).map(([productId, quantity]) => {
+              const product = allProducts.find(
+                (item) => item.id === Number(productId)
+              );
+
+              if (quantity > 0 && product) {
+                return (
+                  <tr key={productId}>
+                    <td>
+                      <Link to={`/product/${product.id}`}>
+                        <img src={product.imgurl} alt={product.category} />
+                      </Link>
+                    </td>
+                    <td>
+                      {product.brand} {product.category}
+                    </td>
+                    <td>{quantity}</td>
+                    <td>${product.price.toFixed(2)}</td>
+                    <td>${(quantity * product.price).toFixed(2)}</td>
+                    <td>
+                      <button onClick={() => removeFromCart(product.id)}>
+                        ❌
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+
+              return null;
+            })}
           </tbody>
         </table>
+        <button id="clearAllBtn" onClick={clearAll}>
+          Clear Cart
+        </button>
       </div>
       <div className="paymentContainer">
         <div className="totalPriceContainer">
-          <h1>TOTAL :</h1>{" "}
+          <h1>TOTAL :</h1>
           <h1>
-            ${cart.reduce((total, item) => total + item.price, 0).toFixed(2)}
+            $
+            {Object.entries(cart)
+              .reduce((total, [productId, quantity]) => {
+                const product = allProducts.find(
+                  (item) => item.id === Number(productId)
+                );
+                return total + quantity * (product ? product.price : 0);
+              }, 0)
+              .toFixed(2)}
           </h1>
         </div>
         <button className="paymentBtn">Payment</button>

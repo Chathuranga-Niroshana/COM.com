@@ -1,33 +1,34 @@
-import React from "react";
+// Item.jsx
+
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Item.css";
-import { useCart } from "../../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext.jsx";
 
 const Item = (props) => {
-  const { id, brand, RAM, price, imgurl, category } = props.product;
-  const { addToCart } = useCart();
+  const { addToCart } = useContext(ProductContext);
 
   const handleAddToCart = () => {
-    addToCart(props.product);
+    addToCart(props.product.id);
   };
 
   return (
     <div className="itemContainer">
-      <div key={id} className="item">
+      <div key={props.product.id} className="item">
         <div className="itemInfo">
           <h3 className="itemName">
-            {brand} {category}
+            {props.product.brand} {props.product.category}
           </h3>
-          <h4 className="itemRam">{RAM} RAM</h4>
-          <Link to={`/product/${id}`}>
+          <h4 className="itemRam">{props.product.RAM} RAM</h4>
+          <Link to={`/product/${props.product.id}`}>
             <img
-              src={imgurl}
-              alt={category}
+              src={props.product.imgurl}
+              alt={props.product.category}
               className="itemImage"
               onClick={() => window.scrollTo(0, 0)}
             />
           </Link>
-          <p className="itemPrice">${price.toFixed(2)}</p>
+          <p className="itemPrice">${props.product.price}</p>
         </div>
         <div className="cartBtn">
           <button className="addCartBtn" onClick={handleAddToCart}>
