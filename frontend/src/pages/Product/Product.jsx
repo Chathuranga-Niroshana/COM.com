@@ -30,7 +30,7 @@ const Product = () => {
         </div>
         <div className="productInfoContainer">
           <h2>
-            {product.brand} {product.category}{" "}
+            {product.brand} {product.category}
           </h2>
           <h4>{product.RAM} RAM </h4>
           <h4>$ {product.price} </h4>
@@ -44,14 +44,13 @@ const Product = () => {
         </div>
       </div>
       <div className="cartInfo">
-        <div className="counter">
+        {/* <div className="counter">
           <div className="counterOperation">+</div>
           <div className="cartCount">
-            {" "}
-            <span id="count">0</span>{" "}
+            <span id="count">0</span>
           </div>
           <div className="counterOperation">-</div>
-        </div>
+        </div> */}
         <div className="cartBtninProduct">
           <button>Add to Cart</button>
         </div>
