@@ -3,8 +3,12 @@ import "./Product.css";
 import productDB from "../../DB/productDB";
 import { Link, useParams } from "react-router-dom";
 import arrowImg from "../../Images/arrow1.png";
+import { useCart } from "../../context/ProductContext";
 
 const Product = () => {
+  const { addToCart } = useCart();
+  
+
   const { id } = useParams();
   const product = productDB.find((e) => e.id === Number(id));
 
@@ -47,8 +51,7 @@ const Product = () => {
         <div className="counter">
           <div className="counterOperation">+</div>
           <div className="cartCount">
-            {" "}
-            <span id="count">0</span>{" "}
+            <span id="count">0</span>
           </div>
           <div className="counterOperation">-</div>
         </div>
