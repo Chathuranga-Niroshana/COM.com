@@ -4,7 +4,7 @@ import "./Cart.css";
 import { ProductContext } from "../../context/ProductContext";
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart, allProducts } =
+  const { cart, removeFromCart, clearCart, allProducts, totalPrice } =
     useContext(ProductContext);
 
   const clearAll = () => {
@@ -27,29 +27,23 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(cart).map(([productId, quantity]) => {
-              const product = allProducts.find(
-                (item) => item.id === Number(productId)
-              );
-
-              if (quantity > 0 && product) {
+            {allProducts.map((e) => {
+              if (cart[e.id] > 0) {
                 return (
-                  <tr key={productId}>
+                  <tr key={e.id}>
                     <td>
-                      <Link to={`/product/${product.id}`}>
-                        <img src={product.imgurl} alt={product.category} />
+                      <Link to={`/product/${e.id}`}>
+                        <img src={e.imgurl} alt={e.category} />
                       </Link>
                     </td>
                     <td>
-                      {product.brand} {product.category}
+                      {e.brand} {e.category}
                     </td>
-                    <td>{quantity}</td>
-                    <td>${product.price.toFixed(2)}</td>
-                    <td>${(quantity * product.price).toFixed(2)}</td>
+                    <td>{cart[e.id]}</td>
+                    <td>${e.price.toFixed(2)}</td>
+                    <td>${(cart[e.id] * e.price).toFixed(2)}</td>
                     <td>
-                      <button onClick={() => removeFromCart(product.id)}>
-                        ❌
-                      </button>
+                      <button onClick={() => removeFromCart(e.id)}>❌</button>
                     </td>
                   </tr>
                 );
@@ -66,17 +60,7 @@ const Cart = () => {
       <div className="paymentContainer">
         <div className="totalPriceContainer">
           <h1>TOTAL :</h1>
-          <h1>
-            $
-            {Object.entries(cart)
-              .reduce((total, [productId, quantity]) => {
-                const product = allProducts.find(
-                  (item) => item.id === Number(productId)
-                );
-                return total + quantity * (product ? product.price : 0);
-              }, 0)
-              .toFixed(2)}
-          </h1>
+          <h1>${totalPrice()}</h1>
         </div>
         <button className="paymentBtn">Payment</button>
       </div>

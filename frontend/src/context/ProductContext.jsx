@@ -37,12 +37,37 @@ export const ProductContextProvider = (props) => {
     setCart(getDefaultCart());
   };
 
+  const totalPrice = () => {
+    let total = 0;
+    for (const i in cart) {
+      if (cart[i] > 0) {
+        let productInfo = allProducts.find(
+          (product) => product.id === Number(i)
+        );
+        total += productInfo.price * cart[i];
+      }
+    }
+    return total.toFixed(2);
+  };
+
+  const totalCartItems = () => {
+    let totalItems = 0;
+    for (const i in cart) {
+      if (cart[i] > 0) {
+        totalItems += cart[i];
+      }
+    }
+    return totalItems;
+  };
+
   const contextValue = {
     cart,
     addToCart,
     removeFromCart,
     clearCart,
     allProducts,
+    totalPrice,
+    totalCartItems,
   };
 
   return (
@@ -51,6 +76,5 @@ export const ProductContextProvider = (props) => {
     </ProductContext.Provider>
   );
 };
-
 
 export default ProductContextProvider;

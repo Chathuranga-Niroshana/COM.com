@@ -9,7 +9,7 @@ import { ProductContext } from "../../context/ProductContext";
 const ProductCategory = (props) => {
   const { allProducts } = useContext(ProductContext);
 
-  const [sortBy, setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("default");
   const [sortOrder, setSortOrder] = useState("asc");
 
   const handleSortBy = (criteria) => {
@@ -22,11 +22,20 @@ const ProductCategory = (props) => {
   };
 
   const compareProducts = (a, b) => {
-    const aValue = sortBy === "name" ? String(a.brand) : String(a.price);
-    const bValue = sortBy === "name" ? String(b.brand) : String(b.price);
-
     const orderMultiplier = sortOrder === "asc" ? 1 : -1;
-    return aValue.localeCompare(bValue) * orderMultiplier;
+
+    if (sortBy === "default") {
+    } else if (sortBy === "name") {
+      const aValue = String(a.brand).toLowerCase();
+      const bValue = String(b.brand).toLowerCase();
+      return aValue.localeCompare(bValue) * orderMultiplier;
+    } else if (sortBy === "price") {
+      const aValue = parseFloat(a.price);
+      const bValue = parseFloat(b.price);
+      return (aValue - bValue) * orderMultiplier;
+    }
+
+    return 0;
   };
 
   return (
@@ -48,6 +57,7 @@ const ProductCategory = (props) => {
               value={sortBy}
               onChange={(e) => handleSortBy(e.target.value)}
             >
+              <option value="default">Sort By</option>
               <option value="name">Name</option>
               <option value="price">Price</option>
             </select>
