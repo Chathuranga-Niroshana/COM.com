@@ -1,9 +1,34 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import profileImg from "../../Images/profile.jpg";
+import axios from "axios";
 
 const Login = () => {
   const [state, setState] = useState("Login");
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    image: "",
+  });
+
+  const changeHandeler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const register  = async ()=>{
+    console.log("Register function executed", formData)
+    try {
+      const responce = await axios.post("http://localhost:8000/user/register")
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <div className="loginsignup">
@@ -14,20 +39,22 @@ const Login = () => {
             <div className="registerContainer">
               <div className="inputField">
                 <div className="field">
+                  <label htmlFor="profileImage">
+                    <img src={profileImg} alt="profileImg" />
+                  </label>
+                  <input type="file" name="image" id="profileImage" hidden />
+                </div>
+                <div className="field">
                   <label htmlFor="username">Username:</label>
-                  <input type="text" id="username" name="username" />
+                  <input onChange={changeHandeler} value={formData.username} type="text" id="username" name="username" />
                 </div>
                 <div className="field">
                   <label htmlFor="email">Email:</label>
-                  <input type="email" id="email" name="email" />
-                </div>
-                <div className="field">
-                  <label htmlFor="mobile">Mobile:</label>
-                  <input type="text" id="mobile" name="mobile" />
+                  <input onChange={changeHandeler} value={formData.email} type="email" id="email" name="email" />
                 </div>
                 <div className="field">
                   <label htmlFor="password">Password:</label>
-                  <input type="text" id="password" name="password" />
+                  <input onChange={changeHandeler} value={formData.password} type="text" id="password" name="password" />
                 </div>
               </div>
               <div className="btnField">
@@ -47,11 +74,11 @@ const Login = () => {
               <div className="inputField">
                 <div className="field">
                   <label htmlFor="email">Email:</label>
-                  <input type="email" id="email" name="email" />
+                  <input onChange={changeHandeler} value={formData.email} type="email" id="email" name="email" />
                 </div>
                 <div className="field">
                   <label htmlFor="password">Password:</label>
-                  <input type="text" id="password" name="password" />
+                  <input onChange={changeHandeler} value={formData.password} type="text" id="password" name="password" />
                 </div>
               </div>
               <div className="btnField">
