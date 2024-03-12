@@ -6,7 +6,7 @@ import searchIcon from "../../Images/search-icon.webp";
 import { Link } from "react-router-dom";
 
 import profileImg from "../../Images/profile.jpg";
-import loginImg from "../../Images/login.jpg"
+import loginImg from "../../Images/login.jpg";
 import cartImg from "../../Images/cart.png";
 import logoutImg from "../../Images/logout.jpg";
 import { ProductContext } from "../../context/ProductContext";
@@ -91,9 +91,21 @@ const Header = ({ handleInputChange }) => {
                 <img src={cartImg} alt="cart" />
               </Link>
               <div className="cartCountNo">{totalCartItems()}</div>
-              <Link to="/login">
-                <img src={logoutImg} alt="logout" id="logoutImg" />
-              </Link>
+              {localStorage.getItem("auth-token") ? (
+                <img
+                  src={logoutImg}
+                  alt="logout"
+                  id="logoutImg"
+                  onClick={() => {
+                    localStorage.removeItem("auth-token");
+                    window.location.replace("/");
+                  }}
+                />
+              ) : (
+                <Link to="/login">
+                  <img src={loginImg} alt="logout" id="logoutImg" />
+                </Link>
+              )}
             </div>
           </div>
         </nav>

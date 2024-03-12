@@ -1,34 +1,113 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "./Login.css";
 import profileImg from "../../Images/profile.jpg";
-import axios from "axios";
 
 const Login = () => {
   const [state, setState] = useState("Login");
-
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
-    image: "",
+    image: null,
   });
 
-  const changeHandeler = (e) => {
+  const imageHandler = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const changeHandler = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const register  = async ()=>{
-    console.log("Register function executed", formData)
+  const register = async () => {
     try {
-      const responce = await axios.post("http://localhost:8000/user/register")
+      let user = { ...formData };
+
+      // Upload image
+      if (image) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("user", image);
+
+        const uploadResponse = await fetch(
+          "http://localhost:8000/user/upload",
+          {
+            method: "POST",
+            body: formDataUpload,
+          }
+        );
+
+        if (!uploadResponse.ok) {
+          console.error("Failed to upload image:", await uploadResponse.text());
+          alert("Failed to upload image");
+          return;
+        }
+
+        const responseData = await uploadResponse.json();
+        user.image = responseData.image_url;
+      }
+
+      // Register user
+      const registerResponse = await fetch(
+        "http://localhost:8000/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      const addUserData = await registerResponse.json();
+
+      if (registerResponse.ok) {
+        window.location.replace("/login");
+        alert("User registered successfully");
+      } else {
+        alert("Failed to register user");
+        // Handle failure, show error message or log details
+      }
     } catch (error) {
-      
+      console.error("An error occurred:", error);
+      alert("An error occurred. Please check the console for details.");
     }
-  }
+  };
+
+  const login = async () => {
+    console.log("Login Function executed", formData);
+
+    try {
+      const response = await fetch("http://localhost:8000/user/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        console.log("Failed to login:", await response.text());
+        alert("Failed to login");
+        return;
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        localStorage.setItem("auth-token", responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.error);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
   return (
     <div className="loginsignup">
@@ -40,33 +119,56 @@ const Login = () => {
               <div className="inputField">
                 <div className="field">
                   <label htmlFor="profileImage">
-                    <img src={profileImg} alt="profileImg" />
+                    <img
+                      src={image ? URL.createObjectURL(image) : profileImg}
+                      alt="profileImg"
+                    />
                   </label>
-                  <input type="file" name="image" id="profileImage" hidden />
+                  <input
+                    onChange={imageHandler}
+                    type="file"
+                    name="image"
+                    id="profileImage"
+                    hidden
+                  />
                 </div>
                 <div className="field">
                   <label htmlFor="username">Username:</label>
-                  <input onChange={changeHandeler} value={formData.username} type="text" id="username" name="username" />
+                  <input
+                    onChange={changeHandler}
+                    value={formData.username}
+                    type="text"
+                    id="username"
+                    name="username"
+                  />
                 </div>
                 <div className="field">
                   <label htmlFor="email">Email:</label>
-                  <input onChange={changeHandeler} value={formData.email} type="email" id="email" name="email" />
+                  <input
+                    onChange={changeHandler}
+                    value={formData.email}
+                    type="email"
+                    id="email"
+                    name="email"
+                  />
                 </div>
                 <div className="field">
                   <label htmlFor="password">Password:</label>
-                  <input onChange={changeHandeler} value={formData.password} type="text" id="password" name="password" />
+                  <input
+                    onChange={changeHandler}
+                    value={formData.password}
+                    type="password"
+                    id="password"
+                    name="password"
+                  />
                 </div>
               </div>
               <div className="btnField">
-                <button id="loginMainBtn">Register</button>
-                <p>Allready have an account?</p>
-                <button
-                  onClick={() => {
-                    setState("Login");
-                  }}
-                >
-                  Login here
+                <button id="loginMainBtn" onClick={register}>
+                  Register
                 </button>
+                <p>Already have an account?</p>
+                <button onClick={() => setState("Login")}>Login here</button>
               </div>
             </div>
           ) : (
@@ -74,24 +176,31 @@ const Login = () => {
               <div className="inputField">
                 <div className="field">
                   <label htmlFor="email">Email:</label>
-                  <input onChange={changeHandeler} value={formData.email} type="email" id="email" name="email" />
+                  <input
+                    onChange={changeHandler}
+                    value={formData.email}
+                    type="email"
+                    id="email"
+                    name="email"
+                  />
                 </div>
                 <div className="field">
                   <label htmlFor="password">Password:</label>
-                  <input onChange={changeHandeler} value={formData.password} type="text" id="password" name="password" />
+                  <input
+                    onChange={changeHandler}
+                    value={formData.password}
+                    type="password"
+                    id="password"
+                    name="password"
+                  />
                 </div>
               </div>
               <div className="btnField">
-                <Link to="/">
-                  <button id="loginMainBtn">Login</button>
-                </Link>
-
+                <button id="loginMainBtn" onClick={login}>
+                  Login
+                </button>
                 <p>Create an account</p>
-                <button
-                  onClick={() => {
-                    setState("Register");
-                  }}
-                >
+                <button onClick={() => setState("Register")}>
                   Register here
                 </button>
               </div>

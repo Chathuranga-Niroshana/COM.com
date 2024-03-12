@@ -44,15 +44,15 @@ router.post("/register", async (req, res) => {
 });
 
 // Upload user image
-router.post("/upload", upload("User").single("user"), (req, res) => {
+router.post("/upload", upload("User").single("user"), async (req, res) => {
   try {
     if (req.file) {
-      res.json({
+      return res.json({
         success: 1,
-        imageUrl: `http://localhost:${PORT}/images/User/${req.file.filename}`,
+        image_url: `http://localhost:${PORT}/images/User/${req.file.filename}`,
       });
     } else {
-      res.status(400).send({ message: "Image did not upload!" });
+      res.status(400).json({ success: 0, message: "No file uploaded" });
     }
   } catch (error) {
     console.log(error);
