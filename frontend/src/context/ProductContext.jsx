@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import allProducts from "../DB/productDB.js";
+import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export const ProductContext = createContext();
 
@@ -12,25 +12,81 @@ const getDefaultCart = () => {
 };
 
 export const ProductContextProvider = (props) => {
-  useEffect(() => {
-    // Additional initialization or side effects can be placed here
-    // This effect runs only once, simulating componentDidMount
-  }, []);
-
+  const [allProducts, setAllProducts] = useState([]);
   const [cart, setCart] = useState(getDefaultCart());
 
-  const addToCart = (productId) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      [productId]: prevCart[productId] + 1,
-    }));
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/product")
+      .then((res) => {
+        setAllProducts(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
 
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      [productId]: prevCart[productId] - 1,
-    }));
+    const authToken = localStorage.getItem("auth-token");
+    if (authToken) {
+      axios
+        .post(
+          "http://localhost:8000/user/getcart",
+          {},
+          {
+            headers: {
+              Accept: "application/json",
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => setCart(res.data))
+        .catch((error) => console.error("Error fetching cart items:", error));
+    }
+  }, []);
+
+  const addToCart = (productId) => {
+    setCart((prev) => ({ ...prev, [productId]: prev[productId] + 1 }));
+
+    if (localStorage.getItem("auth-token")) {
+      const authToken = localStorage.getItem("auth-token");
+
+      axios
+        .post(
+          "http://localhost:8000/user/addtocart",
+          { productId },
+          {
+            headers: {
+              Accept: "application/json",
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => console.log(res.data))
+        .catch((error) => console.error("Error adding to cart:", error));
+    }
+  };
+  const removeFromCart = (itemId) => {
+    setCart((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+
+    if (localStorage.getItem("auth-token")) {
+      const authToken = localStorage.getItem("auth-token");
+
+      axios
+        .post(
+          "http://localhost:8000/user/removefromcart",
+          { itemId }, // Update to itemId
+          {
+            headers: {
+              Accept: "application/json",
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => console.log(res.data))
+        .catch((error) => console.error("Error removing from cart:", error));
+    }
   };
 
   const clearCart = () => {

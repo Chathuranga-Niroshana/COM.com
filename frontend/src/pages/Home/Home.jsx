@@ -1,13 +1,13 @@
-import React from "react";
-import products from "../../DB/productDB";
+import React, { useContext } from "react";
 import Item from "../../components/Item/Item";
 import "./Home.css";
 import bannerImg from "../../Images/34e85832ea9502395f3a5ab138596457.png";
-
+import {ProductContext} from "../../context/ProductContext";
 
 const Home = () => {
-  const latestProducts = products.slice(0, 5);
-  const populerProducts = products.slice(18, 23);
+  const { allProducts } = useContext(ProductContext);
+  const latestProducts = allProducts.slice(0, 5);
+  const populerProducts = allProducts.slice(8, 13);
 
   return (
     <div className="home contentContainer">

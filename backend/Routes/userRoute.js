@@ -103,10 +103,10 @@ const fetchUser = async (req, res, next) => {
 };
 
 // add product to cart
-router.get("/addtocart", fetchUser, async (req, res) => {
-  console.log("Added to cart", req.body.Itemid);
+router.post("/addtocart", fetchUser, async (req, res) => {
+  console.log("Added to cart", req.body.productId); // Update to req.body.productId
   let userData = await User.findOne({ _id: req.user.id });
-  userData.cartData[req.body.Itemid] += 1;
+  userData.cartData[req.body.productId] += 1; // Update to req.body.productId
   await User.findByIdAndUpdate(
     { _id: req.user.id },
     { cartData: userData.cartData }
