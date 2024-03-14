@@ -31,3 +31,8 @@
   width: 100%;
   margin-right: 30px;
 }
+.contentContainer h1{
+  color: rgb(38, 255, 0);
+  font-weight: 400;
+  margin-top: 10px;
+}

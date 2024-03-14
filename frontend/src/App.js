@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "./context/ProductContext.jsx";
 import Item from "./components/Item/Item.jsx";
 import SearchResults from "./pages/SearchProducts/SearchProducts.jsx";
+import EditProfile from "./Operation/EditProfile.jsx";
 
 const DefaultLayout = ({ children }) => (
   <>
@@ -66,6 +67,14 @@ function App() {
             element={
               <DefaultLayout>
                 <Profile />
+              </DefaultLayout>
+            }
+          />
+          <Route
+            path="/editprofile/:id"
+            element={
+              <DefaultLayout>
+                <EditProfile />
               </DefaultLayout>
             }
           />

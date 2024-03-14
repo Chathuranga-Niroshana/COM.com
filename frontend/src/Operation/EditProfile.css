@@ -1,0 +1,21 @@
+.editProfile{
+    height: 40vh;
+    padding: 20px;
+}
+.editProfile h2{
+    font-weight: 400;
+    color: rgb(38, 255, 0);
+}
+td input{
+    border: none;
+    padding: 5px;
+    background-color: transparent;
+    box-shadow: 0 0 2px ;
+    color: white;
+    border-radius: 10px;
+    width: 400px;
+}
+.editProfileInfo{
+    margin: 30px;
+    
+}

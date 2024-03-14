@@ -1,69 +1,70 @@
-.cartContainer{
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    width: 100%;
-    height: 100vh;
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 100%;
+  height: 100vh;
 }
-.cartContainer h1{
-    font-weight: 600;
-    margin-bottom: 20px;
+.cartContainer h1 {
+  margin-bottom: 30px;
+  font-weight: 400;
+  color: rgb(38, 255, 0);
 }
-.cartItems{
-    width: 100%;
-    min-height: 280px;
+.cartItems {
+  width: 100%;
+  min-height: 280px;
 }
-.cartItems table{
-    width: 100%;
+.cartItems table {
+  width: 100%;
 }
-.paymentContainer{
-    display: flex;
-    justify-content: space-between;
+.paymentContainer {
+  display: flex;
+  justify-content: space-between;
 }
-.totalPriceContainer{
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
+.totalPriceContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
 }
-.totalPriceContainer h1{
-    color: rgb(255, 0, 0);
+.totalPriceContainer h1 {
+  color: rgb(255, 0, 0);
 }
-.paymentBtn{
-    background-color: rgb(255, 0, 0);
-    margin-right: 80px;
-    padding: 10px 80px;
-    height: 50px;
-    border: none;
-    border-radius: 20px;
-    color: black;
-    font-size: large;
-    transition: 0.2s ease-in-out;
+.paymentBtn {
+  background-color: rgb(255, 0, 0);
+  margin-right: 80px;
+  padding: 10px 80px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+  color: black;
+  font-size: large;
+  transition: 0.2s ease-in-out;
 }
-.paymentBtn:hover{
-    box-shadow: 0 0 10px rgb(235, 210, 185);
+.paymentBtn:hover {
+  box-shadow: 0 0 10px rgb(235, 210, 185);
 }
-table img{
-    width: 50px;
-    text-align: center;
+table img {
+  width: 50px;
+  text-align: center;
 }
-table tr{
-    text-align: center;
-    margin-top: 30px;
+table tr {
+  text-align: center;
+  margin-top: 30px;
 }
-th{
-    color: coral;
+th {
+  color: coral;
 }
-td button{
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
+td button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
-#clearAllBtn{
-    background-color: red;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 20px;
-    margin-top: 40px;
-    margin-left: 50px;
-    cursor: pointer;
+#clearAllBtn {
+  background-color: red;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-top: 40px;
+  margin-left: 50px;
+  cursor: pointer;
 }

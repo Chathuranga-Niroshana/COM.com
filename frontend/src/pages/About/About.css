@@ -1,0 +1,18 @@
+.about-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.about-container h2 {
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: rgb(38, 255, 0);;
+}
+
+.about-container p {
+  font-size: 16px;
+    color: rgb(46, 105, 105);
+    line-height: 1.6;
+  margin-bottom: 20px;
+}

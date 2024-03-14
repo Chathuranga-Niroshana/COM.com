@@ -6,6 +6,8 @@ const userShema = mongoose.Schema({
   cartData: { type: Object },
   date: { type: Date, default: Date.now },
   image: { type: String },
+  address: { type: String },
+  mobile: { type: Number },
 });
 
 export const User = mongoose.model("User", userShema);

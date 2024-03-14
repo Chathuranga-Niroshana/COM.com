@@ -2,13 +2,16 @@
 
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useSnackbar } from "notistack";
 import "./Item.css";
 import { ProductContext } from "../../context/ProductContext.jsx";
 
 const Item = (props) => {
   const { addToCart } = useContext(ProductContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleAddToCart = () => {
+    enqueueSnackbar("Product added to the cart", { variant: "success" });
     addToCart(props.product.id);
   };
 

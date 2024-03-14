@@ -2,13 +2,19 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Cart.css";
 import { ProductContext } from "../../context/ProductContext";
+import { useSnackbar } from "notistack";
 
 const Cart = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { cart, removeFromCart, clearCart, allProducts, totalPrice } =
     useContext(ProductContext);
 
   const clearAll = () => {
     clearCart();
+    enqueueSnackbar("All items removed from the cart", {
+      variant: "success",
+    });
   };
 
   return (
@@ -43,7 +49,16 @@ const Cart = () => {
                     <td>${e.price.toFixed(2)}</td>
                     <td>${(cart[e.id] * e.price).toFixed(2)}</td>
                     <td>
-                      <button onClick={() => removeFromCart(e.id)}>❌</button>
+                      <button
+                        onClick={() => {
+                          enqueueSnackbar("Item removed from the cart", {
+                            variant: "success",
+                          });
+                          removeFromCart(e.id);
+                        }}
+                      >
+                        ❌
+                      </button>
                     </td>
                   </tr>
                 );

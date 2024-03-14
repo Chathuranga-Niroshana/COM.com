@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useSnackbar } from "notistack";
 import "./Login.css";
 import profileImg from "../../Images/profile.jpg";
 
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
+
   const [state, setState] = useState("Login");
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
@@ -42,7 +46,7 @@ const Login = () => {
 
         if (!uploadResponse.ok) {
           console.error("Failed to upload image:", await uploadResponse.text());
-          alert("Failed to upload image");
+          enqueueSnackbar("Failed to upload image", { variant: "error" });
           return;
         }
 
@@ -66,14 +70,14 @@ const Login = () => {
 
       if (registerResponse.ok) {
         window.location.replace("/login");
-        alert("User registered successfully");
+        enqueueSnackbar("User registered successfully", { variant: "success" });
       } else {
-        alert("Failed to register user");
+        enqueueSnackbar("Failed to register user", { variant: "error" });
         // Handle failure, show error message or log details
       }
     } catch (error) {
       console.error("An error occurred:", error);
-      alert("An error occurred. Please check the console for details.");
+      enqueueSnackbar("An error occurred. Please check the console for details.", { variant: "error" });
     }
   };
 
@@ -92,7 +96,7 @@ const Login = () => {
 
       if (!response.ok) {
         console.log("Failed to login:", await response.text());
-        alert("Failed to login");
+        enqueueSnackbar("Failed to login", { variant: "error" });
         return;
       }
 
@@ -100,9 +104,10 @@ const Login = () => {
 
       if (responseData.success) {
         localStorage.setItem("auth-token", responseData.token);
+        enqueueSnackbar("Loggin Successfull", { variant: "success" });
         window.location.replace("/");
       } else {
-        alert(responseData.error);
+        console.log(responseData.error);
       }
     } catch (error) {
       console.error("Error during login:", error);

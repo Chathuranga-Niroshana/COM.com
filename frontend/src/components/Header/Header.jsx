@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.css";
 import "../Sidebar/Sidebar.css";
 import headerImg from "../../Images/3d_colorful_squares-1920x1080.jpg";
@@ -10,9 +10,46 @@ import loginImg from "../../Images/login.jpg";
 import cartImg from "../../Images/cart.png";
 import logoutImg from "../../Images/logout.jpg";
 import { ProductContext } from "../../context/ProductContext";
+import axios from "axios";
 
 const Header = ({ handleInputChange }) => {
-  const { totalCartItems, allProducts } = useContext(ProductContext);
+  const { totalCartItems } = useContext(ProductContext);
+
+  const [profileImage, setProfileImage] = useState(profileImg);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const authToken = localStorage.getItem("auth-token");
+        if (authToken) {
+          const decodedToken = parseJwt(authToken);
+          const userId = decodedToken.user.id;
+
+          const response = await axios.get(
+            `http://localhost:8000/user/${userId}`,
+            {
+              headers: {
+                "auth-token": authToken,
+              },
+            }
+          );
+          setUser(response.data);
+          setProfileImage(user.image);
+        }
+      } catch (error) {
+        console.log("Error fetching user profile:", error);
+      }
+    };
+    fetchUser();
+  }, []);
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (error) {
+      return null;
+    }
+  };
 
   return (
     <div className="header">
@@ -84,9 +121,15 @@ const Header = ({ handleInputChange }) => {
           </ul>
           <div className="sidebar">
             <div className="sidebarContentUp">
-              <Link to="/profile">
-                <img src={profileImg} alt="profile" id="profileImg" />
-              </Link>
+              {user && (
+                <Link to="/profile">
+                  {localStorage.getItem("auth-token") ? (
+                    <img src={user.image} alt="profile" id="profileImg" />
+                  ) : (
+                    <></>
+                  )}
+                </Link>
+              )}
               <Link to="/cart">
                 <img src={cartImg} alt="cart" />
               </Link>

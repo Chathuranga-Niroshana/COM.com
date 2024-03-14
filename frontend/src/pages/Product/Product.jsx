@@ -3,8 +3,10 @@ import "./Product.css";
 import { Link, useParams } from "react-router-dom";
 import arrowImg from "../../Images/arrow1.png";
 import { ProductContext } from "../../context/ProductContext.jsx";
+import { useSnackbar } from "notistack";
 
 const Product = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { id } = useParams();
   const { addToCart, allProducts } = useContext(ProductContext);
   const product = allProducts.find((e) => e.id === Number(id));
@@ -12,6 +14,7 @@ const Product = () => {
   const handleAddToCart = () => {
     if (product) {
       addToCart(product.id);
+      enqueueSnackbar("Product added to the Cart", { variant: "success" });
     }
   };
 

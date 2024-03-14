@@ -1,14 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import ProductContextProvider from './context/ProductContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import ProductContextProvider from "./context/ProductContext";
+import { SnackbarProvider } from "notistack";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ProductContextProvider>
-    <App />
+    <SnackbarProvider>
+      <App />
+    </SnackbarProvider>
   </ProductContextProvider>
 );
 
