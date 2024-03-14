@@ -62,8 +62,8 @@
   align-items: center;
   background-color: rgba(255, 255, 255, 0.629);
   border-radius: 20px;
-    border: none;
-    margin-left: 20px;
+  border: none;
+  margin-left: 20px;
 }
 
 .searchText input {
@@ -86,8 +86,8 @@
   width: 15%;
   height: 100%;
   border: none;
-    border: none;
-    padding: 7px 15px;
+  border: none;
+  padding: 7px 15px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -97,40 +97,40 @@
   height: 20px;
 }
 
-.sidebarContentUp{
+.sidebarContentUp {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
- }
+}
 
-.sidebarContentUp img{
+.sidebarContentUp img {
   width: 40px;
   margin-right: 20px;
 }
 
-#profileImg{
+#profileImg {
   border-radius: 50px;
   width: 40px;
   height: 40px;
 }
 
-#logoutImg{
+#logoutImg {
   width: 40px;
   height: 40px;
   border-radius: 50px;
 }
 
-.sidebar img{
+.sidebar img {
   cursor: pointer;
   transition: 0.1s ease-in-out;
 }
 
-.sidebar img:hover{
+.sidebar img:hover {
   transform: scale(1.1);
 }
 
-.cartCountNo{
+.cartCountNo {
   width: 22px;
   height: 22px;
   display: flex;
@@ -142,4 +142,56 @@
   font-size: 14px;
   background: red;
   color: #fff;
+}
+
+
+@media(max-width:800px){
+  .navbar ul li{
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  .search button img {
+    width: 10px;
+    height: 10px;
+  }
+  .sidebarContentUp img {
+    width: 30px;
+    margin-right: 20px;
+  }
+  #profileImg {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  #logoutImg {
+    width: 30px;
+    height: 30px;
+  }
+  
+}
+@media(max-width:500px){
+  .navbar ul li{
+    margin-left: 5px;
+    font-size: 13px;
+  }
+  .search button img {
+    width: 10px;
+    height: 10px;
+  }
+  .sidebarContentUp img {
+    width: 30px;
+    margin-right: 20px;
+  }
+  #profileImg {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  #logoutImg {
+    width: 30px;
+    height: 30px;
+  }
+  
 }

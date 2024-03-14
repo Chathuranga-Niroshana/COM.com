@@ -16,7 +16,7 @@ const Cart = () => {
       <h1>CART</h1>
       <div className="cartItems">
         <table>
-          <thead>
+          {/* <thead>
             <tr>
               <th>Image</th>
               <th>Brand</th>
@@ -25,7 +25,7 @@ const Cart = () => {
               <th>Price</th>
               <th>Operation</th>
             </tr>
-          </thead>
+          </thead> */}
           <tbody>
             {allProducts.map((e) => {
               if (cart[e.id] > 0) {
