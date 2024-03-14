@@ -15,6 +15,7 @@ import { ProductContext } from "./context/ProductContext.jsx";
 import Item from "./components/Item/Item.jsx";
 import SearchResults from "./pages/SearchProducts/SearchProducts.jsx";
 import EditProfile from "./Operation/EditProfile.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 const DefaultLayout = ({ children }) => (
   <>
@@ -43,18 +44,19 @@ function App() {
   // }, [query, allProducts]);
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <DefaultLayout>
-                <Home />
-              </DefaultLayout>
-            }
-          />
-          {/* <Route
+    <>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <DefaultLayout>
+                  <Home />
+                </DefaultLayout>
+              }
+            />
+            {/* <Route
             path="/search"
             element={
               <DefaultLayout>
@@ -62,92 +64,94 @@ function App() {
               </DefaultLayout>
             }
           /> */}
-          <Route
-            path="/profile"
-            element={
-              <DefaultLayout>
-                <Profile />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/editprofile/:id"
-            element={
-              <DefaultLayout>
-                <EditProfile />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <DefaultLayout>
-                <Cart />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <DefaultLayout>
-                <About />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <DefaultLayout>
-                <Contact />
-              </DefaultLayout>
-            }
-          ></Route>
-          <Route
-            path="/laptop"
-            element={
-              <DefaultLayout>
-                <ProductCategory category="laptop" />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/desktop"
-            element={
-              <DefaultLayout>
-                <ProductCategory category="desktop" />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/accessories"
-            element={
-              <DefaultLayout>
-                <ProductCategory category="Accessories" />
-              </DefaultLayout>
-            }
-          />
-
-          <Route
-            path="/product"
-            element={
-              <DefaultLayout>
-                <Product />
-              </DefaultLayout>
-            }
-          >
             <Route
-              path=":id"
+              path="/profile"
+              element={
+                <DefaultLayout>
+                  <Profile />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/editprofile/:id"
+              element={
+                <DefaultLayout>
+                  <EditProfile />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <DefaultLayout>
+                  <Cart />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <DefaultLayout>
+                  <About />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <DefaultLayout>
+                  <Contact />
+                </DefaultLayout>
+              }
+            ></Route>
+            <Route
+              path="/laptop"
+              element={
+                <DefaultLayout>
+                  <ProductCategory category="laptop" />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/desktop"
+              element={
+                <DefaultLayout>
+                  <ProductCategory category="desktop" />
+                </DefaultLayout>
+              }
+            />
+            <Route
+              path="/accessories"
+              element={
+                <DefaultLayout>
+                  <ProductCategory category="Accessories" />
+                </DefaultLayout>
+              }
+            />
+
+            <Route
+              path="/product"
               element={
                 <DefaultLayout>
                   <Product />
                 </DefaultLayout>
               }
-            />
-          </Route>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            >
+              <Route
+                path=":id"
+                element={
+                  <DefaultLayout>
+                    <Product />
+                  </DefaultLayout>
+                }
+              />
+            </Route>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+      <Footer />
+    </>
   );
 }
 

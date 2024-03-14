@@ -87,10 +87,10 @@ const Profile = () => {
                   <th>Mobile</th>
                   <td>{user.mobile} </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <th>Password</th>
                   <td>{user.password} </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <th>Cart Items</th>
                   <td>{totalCartItems()} items </td>
