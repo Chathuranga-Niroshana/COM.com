@@ -4,7 +4,8 @@ import "../Sidebar/Sidebar.css";
 import headerImg from "../../Images/3d_colorful_squares-1920x1080.jpg";
 import searchIcon from "../../Images/search-icon.webp";
 import { Link } from "react-router-dom";
-
+import navbarAudio from "../../Images/Audio/navbar.wav";
+import LogoAudio from "../../Images/Audio/logo.wav";
 import profileImg from "../../Images/profile.jpg";
 import loginImg from "../../Images/login.jpg";
 import cartImg from "../../Images/cart.png";
@@ -17,6 +18,13 @@ const Header = ({ handleInputChange }) => {
 
   const [profileImage, setProfileImage] = useState(profileImg);
   const [user, setUser] = useState(null);
+
+  function handleAudioClick() {
+    new Audio(navbarAudio).play();
+  }
+  const clickLogo = () => {
+    new Audio(LogoAudio).play();
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,7 +63,7 @@ const Header = ({ handleInputChange }) => {
     <div className="header">
       <img src={headerImg} alt="header" />
       <div className="headerContent">
-        <h1>COM.com</h1>
+        <h1 onClick={clickLogo}>COM.com</h1>
         <nav className="navbar">
           <div className="search">
             <div className="searchText">
@@ -72,13 +80,13 @@ const Header = ({ handleInputChange }) => {
             </button>
           </div>
           <ul>
-            <li>
+            <li onClick={handleAudioClick}>
               <Link to="/" style={{ color: "black", textDecoration: "none" }}>
                 Home
               </Link>
             </li>
 
-            <li>
+            <li onClick={handleAudioClick}>
               <Link
                 to="/laptop"
                 style={{ color: "black", textDecoration: "none" }}
@@ -86,7 +94,7 @@ const Header = ({ handleInputChange }) => {
                 Laptops
               </Link>
             </li>
-            <li>
+            <li onClick={handleAudioClick}>
               <Link
                 to="/desktop"
                 style={{ color: "black", textDecoration: "none" }}
@@ -94,15 +102,15 @@ const Header = ({ handleInputChange }) => {
                 Desktops
               </Link>
             </li>
-            <li>
+            {/* <li onClick={handleAudioClick}>
               <Link
                 to="/accessories"
                 style={{ color: "black", textDecoration: "none" }}
               >
                 Accessories
               </Link>
-            </li>
-            <li>
+            </li> */}
+            <li onClick={handleAudioClick}>
               <Link
                 to="/about"
                 style={{ color: "black", textDecoration: "none" }}
@@ -110,7 +118,7 @@ const Header = ({ handleInputChange }) => {
                 About
               </Link>
             </li>
-            <li>
+            <li onClick={handleAudioClick}>
               <Link
                 to="/contact"
                 style={{ color: "black", textDecoration: "none" }}
@@ -124,7 +132,12 @@ const Header = ({ handleInputChange }) => {
               {user && (
                 <Link to="/profile">
                   {localStorage.getItem("auth-token") ? (
-                    <img src={user.image} alt="profile" id="profileImg" />
+                    <img
+                      src={user.image}
+                      alt="profile"
+                      id="profileImg"
+                      onClick={handleAudioClick}
+                    />
                   ) : (
                     <></>
                   )}
@@ -146,7 +159,12 @@ const Header = ({ handleInputChange }) => {
                 />
               ) : (
                 <Link to="/login">
-                  <img src={loginImg} alt="logout" id="logoutImg" />
+                  <img
+                    src={loginImg}
+                    alt="logout"
+                    id="logoutImg"
+                    onClick={handleAudioClick}
+                  />
                 </Link>
               )}
             </div>

@@ -1,5 +1,4 @@
-// Item.jsx
-
+import cartBtnAudio from "../../Images/Audio/cartBtn.wav";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -13,6 +12,7 @@ const Item = (props) => {
   const handleAddToCart = () => {
     enqueueSnackbar("Product added to the cart", { variant: "success" });
     addToCart(props.product.id);
+    new Audio(cartBtnAudio).play();
   };
 
   return (

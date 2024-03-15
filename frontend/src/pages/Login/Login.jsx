@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useSnackbar } from "notistack";
 import "./Login.css";
 import profileImg from "../../Images/profile.jpg";
+import loginAudio from "../../Images/Audio/login.wav";
+import errorAudio from "../../Images/Audio/error.wav";
 
 const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
-
 
   const [state, setState] = useState("Login");
   const [image, setImage] = useState(null);
@@ -28,6 +29,8 @@ const Login = () => {
   };
 
   const register = async () => {
+    new Audio(loginAudio).play();
+
     try {
       let user = { ...formData };
 
@@ -70,18 +73,24 @@ const Login = () => {
 
       if (registerResponse.ok) {
         window.location.replace("/login");
+        new Audio(loginAudio).play();
         enqueueSnackbar("User registered successfully", { variant: "success" });
       } else {
         enqueueSnackbar("Failed to register user", { variant: "error" });
         // Handle failure, show error message or log details
       }
     } catch (error) {
+      new Audio(errorAudio).play();
       console.error("An error occurred:", error);
-      enqueueSnackbar("An error occurred. Please check the console for details.", { variant: "error" });
+      enqueueSnackbar(
+        "An error occurred. Please check the console for details.",
+        { variant: "error" }
+      );
     }
   };
 
   const login = async () => {
+    new Audio(loginAudio).play();
     console.log("Login Function executed", formData);
 
     try {
@@ -95,6 +104,7 @@ const Login = () => {
       });
 
       if (!response.ok) {
+        new Audio(errorAudio).play();
         console.log("Failed to login:", await response.text());
         enqueueSnackbar("Failed to login", { variant: "error" });
         return;
@@ -106,10 +116,13 @@ const Login = () => {
         localStorage.setItem("auth-token", responseData.token);
         enqueueSnackbar("Loggin Successfull", { variant: "success" });
         window.location.replace("/");
+        new Audio(loginAudio).play();
       } else {
+        new Audio(errorAudio).play();
         console.log(responseData.error);
       }
     } catch (error) {
+      new Audio(errorAudio).play();
       console.error("Error during login:", error);
     }
   };
@@ -205,7 +218,12 @@ const Login = () => {
                   Login
                 </button>
                 <p>Create an account</p>
-                <button onClick={() => setState("Register")}>
+                <button
+                  onClick={() => {
+                    new Audio(loginAudio).play();
+                    setState("Register");
+                  }}
+                >
                   Register here
                 </button>
               </div>

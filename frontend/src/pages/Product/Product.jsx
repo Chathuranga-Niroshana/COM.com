@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import cartBtnAudio from "../../Images/Audio/cartBtn.wav";
 import "./Product.css";
 import { Link, useParams } from "react-router-dom";
 import arrowImg from "../../Images/arrow1.png";
@@ -13,6 +14,7 @@ const Product = () => {
 
   const handleAddToCart = () => {
     if (product) {
+      new Audio(cartBtnAudio).play();
       addToCart(product.id);
       enqueueSnackbar("Product added to the Cart", { variant: "success" });
     }
