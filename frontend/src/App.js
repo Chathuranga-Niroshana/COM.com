@@ -16,9 +16,11 @@ import Item from "./components/Item/Item.jsx";
 import SearchResults from "./pages/SearchProducts/SearchProducts.jsx";
 import EditProfile from "./Operation/EditProfile.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import Scroll from "./components/Scroll/Scroll.jsx";
 
 const DefaultLayout = ({ children }) => (
   <>
+    <Scroll/>
     <Header />
     {children}
   </>
